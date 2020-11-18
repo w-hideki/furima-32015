@@ -1,6 +1,6 @@
 class Item < ApplicationRecord
-  belongs_to :user  
-  has_one :order 
+  belongs_to :user
+  has_one :order
 
   validates :product_name, presence: true
   validates :product_detail, presence: true
