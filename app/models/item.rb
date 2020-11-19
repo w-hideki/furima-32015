@@ -1,13 +1,26 @@
 class Item < ApplicationRecord
-  # belongs_to :user
-  # has_one :order
+  extend ActiveHash::Associations::ActiveRecordExtensions
+  belongs_to :user
+  has_one :order
+  has_one_attached :image
+  belongs_to :category
+  belongs_to :product_condition
+  belongs_to :delivery_fee
+  belongs_to :area
+  belongs_to :days_to_ship
 
-  # validates :product_name, presence: true
-  # validates :product_detail, presence: true
-  # validates :category_id, presence: true
-  # validates :product_condition_id, presence: true
-  # validates :delivery_fee_id, presence: true
-  # validates :area_id, presence: true
-  # validates :days_to_ship_id, presence: true
-  # validates :price, presence: true
+
+
+  with_options presence: true do
+    
+    validates :product_name
+    validates :product_detail
+    validates :category_id, numericality: { other_than: 1 } 
+    validates :product_condition_id
+    validates :delivery_fee_id
+    validates :area_id
+    validates :days_to_ship_id
+    validates :price
+    validates :image
+  end
 end
