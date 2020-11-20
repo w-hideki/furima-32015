@@ -1,8 +1,8 @@
 class ItemsController < ApplicationController
-  # before_action :authenticate_user!, except: [:index]
-  # before_action :move_to_index, except: [:index]
+  before_action :authenticate_user!, except: [:index]
+
   def index
-    # @items = Item.includes(:user)
+     @items = Item.all.order(created_at: "DESC")
   end
 
   def new
@@ -19,11 +19,7 @@ class ItemsController < ApplicationController
     end
   end
 
-  # def destroy
-  #   item = Item.find(params[:id])
-  #   item.destroy
-  #   redirect_to root_path
-  # end
+
 
   private
 
@@ -31,7 +27,5 @@ class ItemsController < ApplicationController
     params.require(:item).permit(:product_name, :product_detail, :category_id, :product_condition_id, :delivery_fee_id, :area_id, :days_to_ship_id, :price, :image).merge(user_id: current_user.id)
   end
 
-  # def move_to_index
-  #   redirect_to action: :index unless user_signed_in?
-  # end
+
 end
