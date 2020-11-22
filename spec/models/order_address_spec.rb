@@ -3,12 +3,19 @@ require 'rails_helper'
 RSpec.describe OrderAddress, type: :model do
   before do 
     @order_address = FactoryBot.build(:order_address)
+    association :user_id
+    association :item_id
   end
   
   describe '商品購入機能' do
     it '全ての項目が入力されていれば購入ができる' do
       expect(@order_address).to be_valid
     end
+    it 'building_nameが空でも購入できる' do
+      @order_address.building_name = nil
+      expect(@order_address).to be_valid
+    end
+
 
 
     it 'token(クレジットカード情報)が空だと購入ができない' do

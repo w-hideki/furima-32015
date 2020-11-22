@@ -1,7 +1,6 @@
 class OrdersController < ApplicationController
   before_action :authenticate_user!
   before_action :set_order, only: [:index, :create]
-  before_action :move_to_index
 
   def index
     if current_user.id ==  @item.user_id || @item.order != nil
@@ -38,10 +37,6 @@ class OrdersController < ApplicationController
 
   def set_order
     @item = Item.find(params[:item_id])
-  end
-  
-  def move_to_index
-    redirect_to root_path unless @item.user_id != current_user.id
   end
 
 end

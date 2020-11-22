@@ -6,6 +6,8 @@ class OrderAddress
   with_options presence: true do
     validates :postal_code, format: { with: /\A[0-9]{3}-[0-9]{4}\z/ }
     validates :municipality
+    validates :user_id
+    validates :item_id
     validates :phone_number
     validates :token
     validates :address
