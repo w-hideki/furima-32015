@@ -4,7 +4,10 @@ class OrdersController < ApplicationController
   before_action :move_to_index
 
   def index
-      @order_address = OrderAddress.new
+    if current_user.id ==  @item.user_id || @item.order != nil
+      redirect_to root_path
+    end
+    @order_address = OrderAddress.new
   end
 
   def create
