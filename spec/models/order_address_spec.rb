@@ -2,9 +2,10 @@ require 'rails_helper'
 
 RSpec.describe OrderAddress, type: :model do
   before do 
-    @order_address = FactoryBot.build(:order_address)
-    association :user_id
-    association :item_id
+    user = user
+    item = item
+    @order_address = FactoryBot.build(:order_address, user_id: 2, item_id: 2)
+
   end
   
   describe '商品購入機能' do
@@ -38,6 +39,11 @@ RSpec.describe OrderAddress, type: :model do
       @order_address.valid?
       expect(@order_address.errors.full_messages).to include("Area can't be blank")
     end
+    it 'area_idが選択されていないと購入できない' do
+      @order_address.area_id = 1
+      @order_address.valid?
+      expect(@order_address.errors.full_messages).to include("Area must be other than 1")
+    end
     it 'municipalityが空だと購入できない' do
       @order_address.municipality = ""
       @order_address.valid?
@@ -52,6 +58,11 @@ RSpec.describe OrderAddress, type: :model do
       @order_address.phone_number = ""
       @order_address.valid?
       expect(@order_address.errors.full_messages).to include("Phone number can't be blank", "Phone number is invalid")
+    end
+    it 'phone_numberは数字のみでないと（ハイフンが含まれていると）購入できない' do
+      @order_address.phone_number = "123-4567891"
+      @order_address.valid?
+      expect(@order_address.errors.full_messages).to include("Phone number is invalid")
     end
     it 'phone_numberが11桁でなければ購入できない' do
       @order_address.phone_number = "080123456789"
